@@ -55,6 +55,7 @@ service AgentService {
 	rpc OnlineCPUMem(OnlineCPUMemRequest) returns (google.protobuf.Empty);
 	rpc ReseedRandomDev(ReseedRandomDevRequest) returns (google.protobuf.Empty);
 	rpc GetGuestDetails(GuestDetailsRequest) returns (GuestDetailsResponse);
+	rpc UploadFile(UploadFileRequest) returns (google.protobuf.Empty);
 }
 
 message CreateContainerRequest {
@@ -425,4 +426,9 @@ message StringUser {
 	string uid = 1;
 	string gid = 2;
 	repeated string additionalGids = 3;
+}
+
+message UploadFileRequest {
+	string path = 1;
+	string content = 2;
 }

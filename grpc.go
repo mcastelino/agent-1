@@ -1399,3 +1399,15 @@ func (a *agentGRPC) getAgentDetails(ctx context.Context) *pb.AgentDetails {
 
 	return &details
 }
+
+func (a *agentGRPC) UploadFile(ctx context.Context, req *pb.UploadFileRequest) (resp *gpb.Empty, err error) {
+	if err := os.MkdirAll(filepath.Dir(req.Path), 0755); err != nil {
+		return emptyResp, err
+	}
+
+	if err := ioutil.WriteFile(req.Path, []byte(req.Content), 0755); err != nil {
+		return emptyResp, err
+	}
+
+	return emptyResp, nil
+}
