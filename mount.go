@@ -219,8 +219,7 @@ func virtio9pStorageHandler(storage pb.Storage, s *sandbox) (string, error) {
 
 // virtioMmioBlkStorageHandler handles the storage for mmio blk driver.
 func virtioMmioBlkStorageHandler(storage pb.Storage, s *sandbox) (string, error) {
-	storage.Source = filepath.Join(devPrefix, storage.Source)
-
+	//The source path is VmPath
 	return commonStorageHandler(storage)
 }
 
