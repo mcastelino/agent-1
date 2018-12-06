@@ -169,8 +169,11 @@ func getPCIDeviceName(s *sandbox, pciID string) (string, error) {
 }
 
 // device.Id should be the predicted device name (vda, vdb, ...)
+// device.VmPath already provides a way to send it in
 func virtioMmioBlkDeviceHandler(device pb.Device, spec *pb.Spec, s *sandbox) error {
-	device.VmPath = filepath.Join(systemDevPath, device.Id)
+	if device.VmPath == "" {
+		return fmt.Errorf("Invalid path for virtioMmioBlkDevice")
+	}
 
 	return updateSpecDeviceList(device, spec)
 }
