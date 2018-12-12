@@ -56,6 +56,7 @@ service AgentService {
 	rpc ReseedRandomDev(ReseedRandomDevRequest) returns (google.protobuf.Empty);
 	rpc GetGuestDetails(GuestDetailsRequest) returns (GuestDetailsResponse);
 	rpc SetGuestDateTime(SetGuestDateTimeRequest) returns (google.protobuf.Empty);
+	rpc CopyFile(CopyFileRequest) returns (google.protobuf.Empty);
 }
 
 message CreateContainerRequest {
@@ -433,4 +434,21 @@ message StringUser {
 	string uid = 1;
 	string gid = 2;
 	repeated string additionalGids = 3;
+}
+
+message CopyFileRequest {
+	// Path is the destination path in the guest.
+	string path = 1;
+	// FileSize is the expected file size, for security reasons write operations
+	// are made in a temporary file, once it has the expected size, it's moved
+	// to the destination path.
+	int64 file_size = 2;
+	// FileMode is the file mode.
+	uint32 file_mode = 3;
+	// DirMode is the mode for the parent directories of destination path.
+	uint32 dir_mode = 4;
+	// Offset for the next write operation.
+	int64 offset = 5;
+	// Content is the data that must contains destination file.
+	bytes content = 6;
 }
